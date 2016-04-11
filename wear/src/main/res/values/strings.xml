@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">8Wear</string>
+    <string name="hello_round">Hello Round World!</string>
+    <string name="hello_square">Hello Square World!</string>
+    <string name="shake_initial">Shake to start</string>
+
+    <color name="my_blue">#2196F3</color>
+    <color name="my_green">#4CAF50</color>
+    <color name="my_red">#F44336</color>
+    <color name="my_orange">#EF6C00</color>
+
+    <string-array name="outputs">
+        <item>@string/it_is_certain</item>
+        <item>@string/reply_hazy</item>
+        <item>@string/dont_count</item>
+        <item>@string/it_is_decidedly</item>
+        <item>@string/ask_again</item>
+        <item>@string/reply_no</item>
+        <item>@string/without_doubt</item>
+        <item>@string/not_now</item>
+        <item>@string/sources_no</item>
+        <item>@string/yes_definitely</item>
+        <item>@string/cannot_predict</item>
+        <item>@string/outlook_not</item>
+        <item>@string/may_rely</item>
+        <item>@string/concentrate</item>
+        <item>@string/doubtful</item>
+        <item>@string/i_see_it</item>
+        <item>@string/most_likely</item>
+        <item>@string/outlook_good</item>
+        <item>@string/yes</item>
+        <item>@string/sign_yes</item>
+
+        <!--<item>It is certain</item>
+        <item>Reply hazy try again</item>
+        <item>Don't count on it</item>
+        <item>It is decidedly so</item>
+        <item>Ask again later</item>
+        <item>My reply is no</item>
+        <item>Without a doubt</item>
+        <item>Better not tell you now</item>
+        <item>My sources say no</item>
+        <item>Yes definitely</item>
+        <item>Cannot predict now</item>
+        <item>Outlook not so good</item>
+        <item>You may rely on it</item>
+        <item>Concentrate and ask again</item>
+        <item>Very doubtful</item>
+        <item>As I see it, yes</item>
+        <item>Most likely</item>
+        <item>Outlook good</item>
+        <item>Yes</item>
+        <item>Signs point to yes</item>-->
+
+    </string-array>
+
+    <string name="it_is_certain">It is certain</string>
+    <string name="reply_hazy">Reply hazy try again</string>
+    <string name="dont_count">Don\'t count on it</string>
+    <string name="it_is_decidedly">It is decidedly so</string>
+    <string name="ask_again">Ask again later</string>
+    <string name="reply_no">My reply is no</string>
+    <string name="without_doubt">Without a doubt</string>
+    <string name="not_now">Better not tell you now</string>
+    <string name="sources_no">My sources say no</string>
+    <string name="yes_definitely">Yes definitely</string>
+    <string name="cannot_predict">Cannot predict now</string>
+    <string name="outlook_not">Outlook not so good</string>
+    <string name="may_rely">You may rely on it</string>
+    <string name="concentrate">Concentrate and ask again</string>
+    <string name="doubtful">Very doubtful</string>
+    <string name="i_see_it">As I see it, yes</string>
+    <string name="most_likely">Most likely</string>
+    <string name="outlook_good">Outlook good</string>
+    <string name="yes">Yes</string>
+    <string name="sign_yes">Signs point to yes</string>
+</resources>

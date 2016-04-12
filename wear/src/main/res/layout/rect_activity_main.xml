@@ -2,7 +2,7 @@
 <android.support.wearable.view.BoxInsetLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/box_inset"
-    android:background="@drawable/image_b"
+    android:background="@drawable/imgae_b"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:keepScreenOn="true">

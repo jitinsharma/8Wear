@@ -120,7 +120,7 @@ public class MainActivity extends Activity implements SensorEventListener, ViewS
                 ||random.contentEquals("Better not tell you now")||random.contentEquals("Cannot predict now")
                 ||random.contentEquals("Concentrate and ask again")){
             if (color != R.color.my_blue) {
-                boxInsetLayout.setBackground(resources.getDrawable(R.drawable.image_b));
+                boxInsetLayout.setBackground(resources.getDrawable(R.drawable.imgae_b));
             }
             color = R.color.my_blue;
             displayTextWithDelay(random);

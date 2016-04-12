@@ -16,3 +16,9 @@ There are 20 standard [responses](https://en.wikipedia.org/wiki/Magic_8-Ball#Pos
 - Google
 - [Background](http://www.oxygenna.com/news/new-free-set-of-material-design-backgrounds)
 - [8 Ball icon svg](https://commons.wikimedia.org/wiki/File:8_ball_icon.svg)
+
+## Screens
+![screen](../master/img/init.png)
+![screen](../master/img/blue.png)
+![screen](../master/img/green.png)
+![screen](../master/img/red.png)

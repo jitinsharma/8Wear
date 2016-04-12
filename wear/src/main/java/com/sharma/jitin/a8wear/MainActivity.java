@@ -1,5 +1,6 @@
 package com.sharma.jitin.a8wear;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Typeface;
@@ -10,9 +11,13 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.wearable.view.BoxInsetLayout;
+import android.support.wearable.view.CardFrame;
 import android.support.wearable.view.WatchViewStub;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -30,6 +35,8 @@ public class MainActivity extends Activity implements SensorEventListener, ViewS
     int color;
     ImageView ballImage;
     Drawable drawable;
+    BoxInsetLayout boxInsetLayout;
+    CardFrame cardFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +51,17 @@ public class MainActivity extends Activity implements SensorEventListener, ViewS
             public void onLayoutInflated(WatchViewStub stub) {
                 mTextSwitcher = (TextSwitcher) stub.findViewById(R.id.text);
                 ballImage = (ImageView)stub.findViewById(R.id.ball_icon);
+                boxInsetLayout = (BoxInsetLayout)stub.findViewById(R.id.box_inset);
+                cardFrame = (CardFrame)stub.findViewById(R.id.card);
                 drawable = ballImage.getDrawable();
                 color = R.color.black;
                 displayText(getResources().getString(R.string.shake_initial));
+                cardFrame.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        response();
+                    }
+                });
             }
         });
     }
@@ -66,7 +81,6 @@ public class MainActivity extends Activity implements SensorEventListener, ViewS
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            //mTextSwitcher.setText("sensor change captured");
             getAccelerometer(sensorEvent);
         }
     }
@@ -83,10 +97,10 @@ public class MainActivity extends Activity implements SensorEventListener, ViewS
         float y = values[1];
         float z = values[2];
 
-        float accelerationSquareRoot = (x * x + y * y + z * z)
-                / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
+        float force = (float) Math.sqrt((x * x + y * y + z * z)
+                / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH));
         long actualTime = event.timestamp;
-        if (accelerationSquareRoot >= 2) //
+        if (force >= 2) //
         {
             if (actualTime - lastUpdate < 200) {
                 return;
@@ -97,36 +111,35 @@ public class MainActivity extends Activity implements SensorEventListener, ViewS
     }
 
     public void response(){
-        //Intent intent = new Intent(this, ResponseActivity.class);
-        String[] fruits = {"It is certain","Reply hazy try again","Don't count on it",
-                "It is decidedly so","Ask again later","My reply is no","Without a doubt",
-                "Better not tell you now","My sources say no","Yes definitely","Cannot predict now",
-                "Outlook not so good","You may rely on it","Concentrate and ask again","Very doubtful",
-                "As I see it, yes","Most likely","Outlook good","Yes","Signs point to yes",
-        };
         Resources resources = getResources();
         String[] outputs = resources.getStringArray(R.array.outputs);
 
-        String random = (outputs[new Random().nextInt(outputs.length)]);
-        //String random = (fruits[new Random().nextInt(fruits.length)]);
-        //TextSwitcher mTextSwitcher = (TextSwitcher) findViewById(R.id.text);
+        final String random = (outputs[new Random().nextInt(outputs.length)]);
 
         if(random.contentEquals("Ask again later")||random.contentEquals("Reply hazy try again")
                 ||random.contentEquals("Better not tell you now")||random.contentEquals("Cannot predict now")
                 ||random.contentEquals("Concentrate and ask again")){
-            //voice_op.setTextColor(getResources().getColor(R.color.blue));
+            if (color != R.color.my_blue) {
+                boxInsetLayout.setBackground(resources.getDrawable(R.drawable.image_b));
+            }
             color = R.color.my_blue;
-            displayText(random);
+            displayTextWithDelay(random);
         }
         else if(random.contentEquals("Don't count on it")||random.contentEquals("My reply is no")
                 ||random.contentEquals("My sources say no")||random.contentEquals("Outlook not so good")
                 ||random.contentEquals("Very doubtful")){
+            if (color != R.color.my_red) {
+                boxInsetLayout.setBackground(resources.getDrawable(R.drawable.image_r));
+            }
             color = R.color.my_red;
-            displayText(random);
+            displayTextWithDelay(random);
         }
         else{
+            if (color != R.color.my_green) {
+                boxInsetLayout.setBackground(resources.getDrawable(R.drawable.image_g));
+            }
             color = R.color.my_green;
-            displayText(random);
+            displayTextWithDelay(random);
         }
     }
 
@@ -145,15 +158,34 @@ public class MainActivity extends Activity implements SensorEventListener, ViewS
             ((Animatable) drawable).start();
         }
         mTextSwitcher.removeAllViews();
-        //SystemClock.sleep(300);
         mTextSwitcher.setFactory(this);
-        Animation in = AnimationUtils.loadAnimation(this,
-                android.R.anim.slide_in_left);
-        Animation out = AnimationUtils.loadAnimation(this,
-                android.R.anim.slide_out_right);
-        in.setDuration(200);
-        mTextSwitcher.setInAnimation(in);
-        mTextSwitcher.setOutAnimation(out);
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+            Animation in = AnimationUtils.loadAnimation(this,
+                    android.R.anim.slide_in_left);
+            Animation out = AnimationUtils.loadAnimation(this,
+                    android.R.anim.slide_out_right);
+            in.setDuration(200);
+            mTextSwitcher.setInAnimation(in);
+            mTextSwitcher.setOutAnimation(out);
+        }
+        else{
+            int cx = cardFrame.getWidth() / 2;
+            int cy = cardFrame.getHeight() / 2;
+            float finalRadius = (float) Math.hypot(cx, cy);
+            Animator anim = null;
+            anim = ViewAnimationUtils.createCircularReveal(cardFrame, cx, cy, 0, finalRadius);
+            cardFrame.setVisibility(View.VISIBLE);
+            anim.start();
+        }
         mTextSwitcher.setText(text);
+    }
+
+    public void displayTextWithDelay(final String text){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                displayText(text);
+            }
+        },200);
     }
 }

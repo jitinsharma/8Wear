@@ -2,7 +2,7 @@
     <string name="app_name">8Wear</string>
     <string name="hello_round">Hello Round World!</string>
     <string name="hello_square">Hello Square World!</string>
-    <string name="shake_initial">Shake to start</string>
+    <string name="shake_initial">Shake/Tap to start</string>
 
     <color name="my_blue">#2196F3</color>
     <color name="my_green">#4CAF50</color>

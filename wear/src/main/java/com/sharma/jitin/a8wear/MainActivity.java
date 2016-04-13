@@ -92,15 +92,14 @@ public class MainActivity extends Activity implements SensorEventListener, ViewS
 
     private void getAccelerometer(SensorEvent event) {
         float[] values = event.values;
-        // Movement
-        float x = values[0];
+        //float x = values[0]; Movement in x-direction may not be relevant in watch?
         float y = values[1];
         float z = values[2];
 
-        float force = (float) Math.sqrt((x * x + y * y + z * z)
+        float force = (float) Math.sqrt((y * y + z * z)
                 / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH));
         long actualTime = event.timestamp;
-        if (force >= 2) //
+        if (force >= 1.4)
         {
             if (actualTime - lastUpdate < 200) {
                 return;
@@ -159,6 +158,8 @@ public class MainActivity extends Activity implements SensorEventListener, ViewS
         }
         mTextSwitcher.removeAllViews();
         mTextSwitcher.setFactory(this);
+
+        // Animate according to android versions
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
             Animation in = AnimationUtils.loadAnimation(this,
                     android.R.anim.slide_in_left);
@@ -177,6 +178,7 @@ public class MainActivity extends Activity implements SensorEventListener, ViewS
             cardFrame.setVisibility(View.VISIBLE);
             anim.start();
         }
+
         mTextSwitcher.setText(text);
     }
 
